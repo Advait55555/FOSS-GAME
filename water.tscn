@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://ca3qyn2i5p1ca"]
+
+[ext_resource type="Texture2D" uid="uid://c51i0vrw8g8ps" path="res://Art/Backgrounds/Animated/Water Ripples/SpriteSheet16x16.png" id="1_qi1wl"]
+
+[sub_resource type="Animation" id="Animation_dcmoc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer1/Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(0, 0, 16, 16)]
+}
+
+[sub_resource type="Animation" id="Animation_7wcun"]
+resource_name = "1"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer1/Sprite2D:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(0, 0, 16, 16), Rect2(16, 0, 16, 16), Rect2(32, 0, 16, 16), Rect2(48, 0, 16, 16)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qmoj4"]
+_data = {
+&"RESET": SubResource("Animation_dcmoc"),
+&"water": SubResource("Animation_7wcun")
+}
+
+[node name="water" type="Node2D" unique_id=998907970]
+
+[node name="AnimationPlayer1" type="AnimationPlayer" parent="." unique_id=2078603837]
+libraries/ = SubResource("AnimationLibrary_qmoj4")
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimationPlayer1" unique_id=1737672059]
+position = Vector2(42, 24)
+texture = ExtResource("1_qi1wl")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cbpvk4imr6x6o"
+path="res://.godot/imported/Impact5.wav-e024ae0e39f23191245a14c4c8e1bded.sample"
+
+[deps]
+
+source_file="res://Art/Audio/Sounds/Hit & Impact/Impact5.wav"
+dest_files=["res://.godot/imported/Impact5.wav-e024ae0e39f23191245a14c4c8e1bded.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

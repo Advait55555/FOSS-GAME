@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b2jjld72qhsnh"
+path="res://.godot/imported/37 - Dark Forest.ogg-9d1268a10a9799d25b88d0183dd0cfab.oggvorbisstr"
+
+[deps]
+
+source_file="res://Art/Audio/Musics/37 - Dark Forest.ogg"
+dest_files=["res://.godot/imported/37 - Dark Forest.ogg-9d1268a10a9799d25b88d0183dd0cfab.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
