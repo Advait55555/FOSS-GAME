@@ -1,42 +1,79 @@
 [gd_scene format=3 uid="uid://b47mv1btamf66"]
 
+[ext_resource type="Texture2D" uid="uid://j3517f3mu4qy" path="res://Art/Actor/Characters/Boy/SeparateAnim/Idle.png" id="1_kne1u"]
 [ext_resource type="Texture2D" uid="uid://dq3i0rbavd4n4" path="res://Art/Actor/Characters/Boy/SeparateAnim/Attack.png" id="1_kpjcp"]
 [ext_resource type="Texture2D" uid="uid://cw7idbie62tml" path="res://Art/Actor/Characters/Boy/SpriteSheet.png" id="1_xhfnw"]
 
 [sub_resource type="GDScript" id="GDScript_xhfnw"]
-script/source = "extends CharacterBody2D
+script/source = "class_name Player extends CharacterBody2D
+
 @onready var animated_sprite_2d: AnimatedSprite2D = $Node2D/AnimatedSprite2D
 
-@export var Speed=10
-var speed_multiplayer=30
+var direction_string = \"down\"
+@export var Speed = 10
+var speed_multiplayer = 30
+
+var is_attacking = false
 
 
 func _physics_process(delta: float) -> void:
 	process_movement()
 	move_and_slide()
 	
-	
-func process_movement()->void:
-	var direction:=Input.get_vector(\"left\",\"right\",\"Up\",\"down\")
-	velocity=direction*Speed*speed_multiplayer
-	
-	if direction == Vector2.ZERO:
-		animated_sprite_2d.stop()
+
+func process_movement() -> void:
+	var direction := Input.get_vector(\"left\", \"right\", \"Up\", \"down\")
+	velocity = direction * Speed * speed_multiplayer
+
+	if direction.x > 0:
+		direction_string = \"right\"
+	elif direction.x < 0:
+		direction_string = \"left\"
+	elif direction.y < 0:
+		direction_string = \"up\"
+	elif direction.y > 0:
+		direction_string = \"down\"
+
+	play_animation(direction)
+
+
+func play_animation(dir: Vector2) -> void:
+	if is_attacking:
 		return
-	if direction.x>0:
-		animated_sprite_2d.play(\"right\")
-	elif direction.x<0:
-		animated_sprite_2d.play(\"left\")
-	
-	elif direction.y<0:
-		animated_sprite_2d.play(\"up\")
-	elif direction.y>0:
-		animated_sprite_2d.play(\"down\")
+
+	if Input.is_action_just_pressed(\"click_left\"):
+		is_attacking = true
+		animated_sprite_2d.play(\"attack_\" + direction_string)
+		await animated_sprite_2d.animation_finished
+		is_attacking = false
+		return
+
+	if dir == Vector2.ZERO:
+		animated_sprite_2d.play(\"Idle_\" + direction_string)
+	else:
+		animated_sprite_2d.play(\"run_\" + direction_string)
+		
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kpjcp"]
 radius = 7.0
 height = 20.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p01ps"]
+atlas = ExtResource("1_kne1u")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7dl7"]
+atlas = ExtResource("1_kne1u")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48og4"]
+atlas = ExtResource("1_kne1u")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmpta"]
+atlas = ExtResource("1_kne1u")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ictha"]
 atlas = ExtResource("1_kpjcp")
@@ -44,15 +81,15 @@ region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1jgrc"]
 atlas = ExtResource("1_kpjcp")
-region = Rect2(16, 0, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7wy67"]
-atlas = ExtResource("1_kpjcp")
 region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q26ax"]
 atlas = ExtResource("1_kpjcp")
 region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7wy67"]
+atlas = ExtResource("1_kpjcp")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xhfnw"]
 atlas = ExtResource("1_xhfnw")
@@ -170,19 +207,66 @@ region = Rect2(16, 96, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ictha")
+"texture": SubResource("AtlasTexture_p01ps")
+}],
+"loop": true,
+"name": &"Idle_down",
+"speed": 5.0
 }, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m7dl7")
+}],
+"loop": true,
+"name": &"Idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48og4")
+}],
+"loop": true,
+"name": &"Idle_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmpta")
+}],
+"loop": true,
+"name": &"Idle_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ictha")
+}],
+"loop": false,
+"name": &"attack_down",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1jgrc")
+}],
+"loop": false,
+"name": &"attack_left",
+"speed": 5.0
 }, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7wy67")
-}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_q26ax")
 }],
-"loop": true,
-"name": &"attack",
+"loop": false,
+"name": &"attack_right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7wy67")
+}],
+"loop": false,
+"name": &"attack_up",
 "speed": 5.0
 }, {
 "frames": [{
@@ -208,8 +292,8 @@ animations = [{
 "texture": SubResource("AtlasTexture_dtqjt")
 }],
 "loop": true,
-"name": &"down",
-"speed": 5.0
+"name": &"run_down",
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -234,8 +318,8 @@ animations = [{
 "texture": SubResource("AtlasTexture_d6rpx")
 }],
 "loop": true,
-"name": &"left",
-"speed": 4.0
+"name": &"run_left",
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -260,8 +344,8 @@ animations = [{
 "texture": SubResource("AtlasTexture_0pi4m")
 }],
 "loop": true,
-"name": &"right",
-"speed": 5.0
+"name": &"run_right",
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -286,13 +370,13 @@ animations = [{
 "texture": SubResource("AtlasTexture_vd78s")
 }],
 "loop": true,
-"name": &"up",
-"speed": 5.0
+"name": &"run_up",
+"speed": 10.0
 }]
 
-[node name="Player" type="CharacterBody2D" unique_id=1266375336]
+[node name="Player" type="CharacterBody2D" unique_id=1266375336 groups=["player"]]
 script = SubResource("GDScript_xhfnw")
-Speed = 5
+Speed = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=770272884]
 shape = SubResource("CapsuleShape2D_kpjcp")
@@ -304,4 +388,4 @@ zoom = Vector2(6, 6)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Node2D" unique_id=612380823]
 sprite_frames = SubResource("SpriteFrames_ictha")
-animation = &"left"
+animation = &"run_up"
