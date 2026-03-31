@@ -4,7 +4,7 @@ Game: CALAMITY
   Movement: WASD and arrow keys
   Attack: Left-click
   Interact: E
-How to run: Install Godot's recent version through this link: https://godotengine.org/download/windows/  or though steam and open "Calamity.exe" in our repo.
+## How to run: Install Godot's recent version through this link: https://godotengine.org/download/windows/  or though steam and open "Calamity.exe" in our repo.
 
 ## Development Timeline (March 2026)
 
