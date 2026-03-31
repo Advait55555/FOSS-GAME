@@ -1,6 +1,6 @@
 Game: CALAMITY
-##Concept:Top down dungeon style story game where player goes to each dungeon and fight bosses
-##Controls:
+## Concept:Top down dungeon style story game where player goes to each dungeon and fight bosses
+## Controls:
   Movement: WASD and arrow keys
   Attack: Left-click
   Interact: E
